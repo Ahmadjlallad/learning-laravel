@@ -28,7 +28,7 @@ Route::get('/json', static function () {
 Route::get('/post/{post}', static function ($slug) {
     // Find a Post by its slug and pass it to view
     // it presumable a model so create a model in the app model dir
-    return view('post',  ['post' => Post::find($slug)]);
+    return view('post',  ['post' => Post::findOrFil($slug)]);
 })
     ->where('post', '[A-z_\\-]+'); // advance we can use regular exp
 //->whereAlpha('post'); // Aliphatic A-z

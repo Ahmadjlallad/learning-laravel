@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Throwable;
 
 class Post
 {
@@ -14,10 +16,16 @@ class Post
     }
 
     /**
-     * @param string $slug
-     * @return Post
+     * @throws Throwable
      */
-    public static function find(string $slug): Post
+    public static function findOrFil(string $slug): Post
+    {
+        $post = static::find($slug);
+        throw_if(!$post, new ModelNotFoundException);
+        return $post;
+    }
+
+    public static function find(string $slug): Post|null
     {
 
         // there is multiple helpers about the file system
