@@ -1,0 +1,3 @@
+id,name,email,email_verified_at,password,remember_token,created_at,updated_at
+1,Ahmad,ahmad.test@test.com,,$2y$10$elunvcCZ7D.j477vIc0JiuIzbL4ruscWO6k6O1P5uij54h3AcUK9u,,2022-08-07 19:09:10,2022-08-07 19:09:10
+2,ibrahim,ibrahim@test.com,,$2y$10$S7d3yHG3Eqx5IbJ65F1I5O1dGvAhxJLiLGVJRdTZXMC8mIJKkiw5C,,2022-08-07 19:15:52,2022-08-07 19:15:52

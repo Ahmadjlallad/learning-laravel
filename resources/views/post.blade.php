@@ -1,7 +1,9 @@
 @php
     use App\Models\Post;
     use Illuminate\Support\Facades\URL;
+    /* @var $post */
     assert($post instanceof Post);
+
 @endphp
 <title>{{$post->title}}</title>
 @extends('layout')
@@ -10,7 +12,9 @@
 @endsection
 @section('content')
     <article>
-        {!! $post->body !!}
+        <p>
+            {!! $post->body !!}
+        </p>
     </article>
     <a href="{{URL::to('/')}}">Go back</a>
 @endsection
