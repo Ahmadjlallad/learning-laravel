@@ -25,10 +25,11 @@ Route::get('/json', static function () {
 
 // to cache something use cache global name space with remember
 // to add constraint to wild card add ->where
-Route::get('/post/{post}', static function ($slug) {
+Route::get('/post/{post}', static function ($id) {
     // Find a Post by its slug and pass it to view
     // it presumable a model so create a model in the app model dir
-    return view('post',  ['post' => Post::findOrFil($slug)]);
+    return view('post',  ['post' => Post::find($id)]);
 })
-    ->where('post', '[A-z_\\-]+'); // advance we can use regular exp
+    ->whereNumber('post'); // advance we can use regular exp
+//    ->where('post', '[A-z_\\-]+'); // advance we can use regular exp
 //->whereAlpha('post'); // Aliphatic A-z

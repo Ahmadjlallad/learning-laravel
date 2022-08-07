@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Facades\URL;
+@endphp
 <title>Blog</title>
 @extends('layout')
 @section('banner')
@@ -6,8 +9,10 @@
 @section('content')
     @foreach($posts as $post)
         <article>
-            <a href="{{URL::to("/post/$post->slug")}}"><h2>{{$post->title}}</h2></a>
-            {!! $post->body !!}
+            <a href="{{URL::to("/post", ['id' => $post->id])}}"><h2>{{$post->title}}</h2></a>
+            <p>
+                {!! $post->body !!}
+            </p>
         </article>
     @endforeach
 @endsection
