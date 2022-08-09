@@ -1,7 +1,6 @@
 @php
     use App\Models\Post;
-    use Illuminate\Support\Facades\URL;
-    /* @var $post */
+    /* @var $post Post*/
     assert($post instanceof Post);
 
 @endphp
@@ -16,5 +15,6 @@
             {!! $post->body !!}
         </p>
     </article>
+    <a href="#">{{ $post->category?->name }}</a>
     <a href="{{URL::to('/')}}">Go back</a>
 @endsection

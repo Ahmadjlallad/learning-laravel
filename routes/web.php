@@ -27,18 +27,17 @@ Route::get('/json', static function () {
 // to add constraint to wild card add ->where
 
 // in this cass laravel use route model binding
-Route::get('/post/{post}', static function (Post $post) {
-    // Find a Post by its slug and pass it to view
-    // it presumable a model so create a model in the app model dir
-    return view('post',  ['post' => $post]);
-})
-    ->whereNumber('post'); // advance we can use regular exp
+//Route::get('/post/{post}', static function (Post $post) {
+//    // Find a Post by its slug and pass it to view
+//    // it presumable a model so create a model in the app model dir
+//    return view('post',  ['post' => $post]);
+//})
+//    ->whereNumber('post'); // advance we can use regular exp
 //    ->where('post', '[A-z_\\-]+'); // advance we can use regular exp
 //->whereAlpha('post'); // Aliphatic A-z
 // using slug
 Route::get('/post/{post:slug}', static function (Post $post) {
     // Find a Post by its slug and pass it to view
     // it presumable a model so create a model in the app model dir
-    return view('post',  ['post' => $post]);
-})
-    ->whereNumber('post');
+    return view('post', ['post' => $post]);
+});
