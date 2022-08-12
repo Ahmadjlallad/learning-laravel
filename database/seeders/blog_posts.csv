@@ -1,6 +1,0 @@
-id,title,excerpt,body,created_at,updated_at,published_at
-1,My First Post,Lorem ipsum dolor sit amet,"Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus, alias assumenda deserunt porro
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus, alias assumenda deserunt porro
-        reprehenderit repudiandae temporibus? Aspernatur consectetur ducimus enim et fugiat ipsa, odit officia quisquam,
-        rem saepe voluptatem",2022-08-07 19:34:08,2022-08-07 19:34:08,
-2,Eloquent is Amazing,Eloquent save times,"Eloquent is an object relational mapper (ORM) that is included by default within the Laravel framework. An ORM is software that facilitates handling database records by representing data as objects, working as a layer of abstraction on top of the database engine used to store an application's data.",2022-08-07 19:40:45,2022-08-07 19:40:45,

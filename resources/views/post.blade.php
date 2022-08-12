@@ -1,7 +1,6 @@
 @php
     use App\Models\Post;
-    use Illuminate\Support\Facades\URL;
-    /* @var $post */
+    /* @var $post Post*/
     assert($post instanceof Post);
 
 @endphp
@@ -9,6 +8,7 @@
 @extends('layout')
 @section('banner')
     <h1>{{$post->title}}</h1>
+    <h2>By <a href="#">Ahmad</a> in <a href="{{URL::to('/category', ['category' => $post?->category->slug])}}">{{$post->category->name}}</a></h2>
 @endsection
 @section('content')
     <article>
