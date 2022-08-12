@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -24,8 +26,14 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read Collection|Post[] $post
+ * @property-read int|null $post_count
  */
 class Category extends Model
 {
     use HasFactory;
+    final public function post(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
 }

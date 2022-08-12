@@ -10,7 +10,7 @@
             <p>
                 {!! $post->body !!}
             </p>
-            <a href="#">{{ $post->category?->name }}</a>
+            <a href="{{URL::to('/category', ['category' => $post->category->slug])}}">{{ $post->category?->name }}</a>
         </article>
     @endforeach
 @endsection

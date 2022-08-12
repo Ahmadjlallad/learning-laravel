@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', static function () {
-    $posts = Post::all();
-    return view('posts', ['posts' => $posts]);
+    \Illuminate\Support\Facades\DB::listen(
+        static function(QueryExecuted $query) {
+        logger($query->sql, $query->bindings);
+        //we can find the files in storage -> log -> laravel.log
+    });
+    return view('posts', ['posts' => Post::all()]);
 });
 
 Route::get('/json', static function () {
@@ -40,4 +47,7 @@ Route::get('/post/{post:slug}', static function (Post $post) {
     // Find a Post by its slug and pass it to view
     // it presumable a model so create a model in the app model dir
     return view('post', ['post' => $post]);
+});
+Route::get('/category/{category:slug}', static function(Category $category) {
+    return view('posts', ['posts' => $category->post]);
 });

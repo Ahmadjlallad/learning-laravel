@@ -15,6 +15,6 @@
             {!! $post->body !!}
         </p>
     </article>
-    <a href="#">{{ $post->category?->name }}</a>
+    <a href="{{URL::to('/category', ['category' => $post->category->slug])}}">Go back {{$post->category->name}}</a>
     <a href="{{URL::to('/')}}">Go back</a>
 @endsection
