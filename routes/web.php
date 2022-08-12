@@ -18,12 +18,17 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', static function () {
-    \Illuminate\Support\Facades\DB::listen(
-        static function(QueryExecuted $query) {
-        logger($query->sql, $query->bindings);
-        //we can find the files in storage -> log -> laravel.log
-    });
-    return view('posts', ['posts' => Post::all()]);
+//    \Illuminate\Support\Facades\DB::listen(
+//        static function(QueryExecuted $query) {
+//        logger($query->sql, $query->bindings);
+//        //we can find the files in storage -> log -> laravel.log
+//    });
+    // we can ues clock work instead we need to install it in the project and use the chrome extinction or any available
+
+    // to solve the n+1 problem we can ues the with function
+    // n+1 problem will acre when we get the post and then try to lazy load every query so laravel will try to select every category by single id
+    // but with will use between to solve this issue
+    return view('posts', ['posts' => Post::with('category')->get()]);
 });
 
 Route::get('/json', static function () {
