@@ -8,7 +8,8 @@
 @extends('layout')
 @section('banner')
     <h1>{{$post->title}}</h1>
-    <h2>By <a href="#">Ahmad</a> in <a href="{{URL::to('/category', ['category' => $post?->category->slug])}}">{{$post->category->name}}</a></h2>
+    <x-author-archer :username="$post->author->username"></x-author-archer>
+    in <a href="{{URL::to('/category', ['category' => $post?->category->slug])}}">{{$post->category->name}}</a>
 @endsection
 @section('content')
     <article>

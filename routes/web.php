@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,7 @@ Route::get('/', static function () {
     // to solve the n+1 problem we can ues the with function
     // n+1 problem will acre when we get the post and then try to lazy load every query so laravel will try to select every category by single id
     // but with will use between to solve this issue
-    return view('posts', ['posts' => Post::with('category')->get()]);
+    return view('posts', ['posts' => Post::latest()->with(['category', 'author'])->get()]);
 });
 
 Route::get('/json', static function () {
@@ -54,5 +55,8 @@ Route::get('/post/{post:slug}', static function (Post $post) {
     return view('post', ['post' => $post]);
 });
 Route::get('/category/{category:slug}', static function(Category $category) {
-    return view('posts', ['posts' => $category->post]);
+    return view('posts', ['posts' => $category->post->load(['category', 'author'])]);
+});
+Route::get('/authors/{author:username}', static function(User $author) {
+    return view('posts', ['posts' => $author->post->load(['category', 'author'])]);
 });

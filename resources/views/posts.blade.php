@@ -1,3 +1,6 @@
+@php
+/* @var \App\Models\Post $post */
+@endphp
 <title>Blog</title>
 @extends('layout')
 @section('banner')
@@ -7,6 +10,7 @@
     @foreach($posts as $post)
         <article>
             <a href="{{URL::to("/post", ['slug' => $post->slug])}}"><h2>{{$post->title}}</h2></a>
+            <x-author-archer :username="$post->author->username"></x-author-archer>
             <p>
                 {!! $post->body !!}
             </p>
