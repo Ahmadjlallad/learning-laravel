@@ -1,11 +1,16 @@
+@php use App\Models\Post; @endphp
+@php
+    /* @var $post Post */
+@endphp
+
 <article
-    class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
-    <div class="py-6 px-5">
+        {{ $attributes->merge(['class' => 'transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl']) }}>
+    <div class="py-6 px-5 h-full flex flex-col">
         <div>
             <img src="./images/illustration-5.png" alt="Blog Post illustration" class="rounded-xl">
         </div>
 
-        <div class="mt-8 flex flex-col justify-between">
+        <div class="mt-8 flex flex-col justify-between h-full">
             <header>
                 <div class="space-x-2">
                     <a href="#"
@@ -18,42 +23,35 @@
 
                 <div class="mt-4">
                     <h1 class="text-3xl">
-                        This is a big title and it will look great on two or even three lines. Wooohoo!
+                        <a href="/posts/{{ $post->slug }}">
+                            {{ $post->title }}
+                        </a>
                     </h1>
 
                     <span class="mt-2 block text-gray-400 text-xs">
-                                        Published <time>1 day ago</time>
-                                    </span>
+                        Published <time>{{ $post->created_at->diffForHumans() }}</time>
+                    </span>
                 </div>
             </header>
 
-            <div class="text-sm mt-4">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-
-                <p class="mt-4">
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </p>
+            <div class="text-sm mt-2 space-y-4">
+                {!! $post->excerpt !!}
             </div>
 
             <footer class="flex justify-between items-center mt-8">
                 <div class="flex items-center text-sm">
-                    <img src="./images/lary-avatar.svg" alt="Lary avatar">
+                    <img src="/images/lary-avatar.svg" alt="Lary avatar">
                     <div class="ml-3">
-                        <h5 class="font-bold">Lary Laracore</h5>
-                        <h6>Mascot at Laracasts</h6>
+                        <h5 class="font-bold">
+                            <a href="{{ URL::to('/authors', ['author' => $post->author->username])}}">{{ $post->author->name }}</a>
+                        </h5>
                     </div>
                 </div>
 
-                <div>
-                    <a href="#"
+                <div class="hidden lg:block">
+                    <a href="{{ URL::to('/posts/', ['post' => $post->slug]) }}"
                        class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"
-                    >
-                        Read More
-                    </a>
+                    >Read More</a>
                 </div>
             </footer>
         </div>
