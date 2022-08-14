@@ -21,11 +21,13 @@ class DatabaseSeeder extends Seeder
         User::truncate();
         Category::truncate();
         Post::truncate();
+        $categories = Category::factory(3)->create();
         $users = User::factory(3)->create();
         $iMax = count($users);
         for ($i = 0; $i < ($iMax * $iMax * 3); $i++) {
             Post::factory()->create([
-                'user_id' => $users[random_int(0, 2)]->id
+                'user_id' => $users[random_int(0, 2)]->id,
+                'category_id' => $categories[random_int(0, 2)]->id
             ]);
         }
 //        $personal = Category::create([

@@ -17,13 +17,14 @@ use Illuminate\Support\Carbon;
  * @property string $excerpt
  * @property string $body
  * @property string|null $slug
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $published_at
  * @property int $category_id
  * @property int $user_id
- * @property-read Category|null $category
- * @property-read User|null $author
+ * @property string|null $published_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read \App\Models\User|null $author
+ * @property-read \App\Models\Category|null $category
+ * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static Builder|Post newModelQuery()
  * @method static Builder|Post newQuery()
  * @method static Builder|Post query()
@@ -36,6 +37,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Post whereSlug($value)
  * @method static Builder|Post whereTitle($value)
  * @method static Builder|Post whereUpdatedAt($value)
+ * @method static Builder|Post whereUserId($value)
  * @mixin Eloquent
  */
 class Post extends Model
