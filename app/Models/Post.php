@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\PostFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,7 @@ use Illuminate\Support\Carbon;
  * @property-read \App\Models\User|null $author
  * @property-read \App\Models\Category|null $category
  * @method static \Database\Factories\PostFactory factory(...$parameters)
+ * @method static Builder|Post filter(array $filters)
  * @method static Builder|Post newModelQuery()
  * @method static Builder|Post newQuery()
  * @method static Builder|Post query()
@@ -50,12 +52,39 @@ class Post extends Model
     protected $guarded = ['id'];
 
     protected $with = ['category', 'author'];
+
     final public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
     final public function author(): BelongsTo // laravel will assume this is relation name user_id or pass a foreign ID
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    final function scopeFilter(Builder $query, array $filters): Builder
+    {
+        $query->when(
+            $filters['search'] ?? false,
+                fn($query, $search) => $query->where(fn($query) => $query->where('title', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('body', 'like', '%' . $filters['search'] . '%'))
+        );
+//        $query
+//            ->when($filters['category'] ?? false, fn($query, $category) => $query
+//                ->whereExists(fn($query) => $query->from('categories')
+//                    ->whereColumn('categories.id', 'posts.category_id')
+//                    ->where('categories.slug', $category))
+//            );
+        $query
+            ->when($filters['category'] ?? false, fn(Builder $query, $category) => $query
+                ->whereHas('category', fn(Builder $query) => $query->where('slug', $category))
+            );
+        $query
+            ->when($filters['author'] ?? false, fn(Builder $query, $author) => $query
+                ->whereHas('author', fn(Builder $query) => $query->where('username', $author))
+            );
+
+        return $query;
     }
 }

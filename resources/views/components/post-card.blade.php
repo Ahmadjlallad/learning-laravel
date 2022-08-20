@@ -38,7 +38,7 @@
                     <img src="{{asset('images/lary-avatar.svg')}}" alt="Lary avatar">
                     <div class="ml-3">
                         <h5 class="font-bold">
-                            <a href="{{ URL::to('/authors', ['author' => $post->author->username])}}">{{ $post->author->name }}</a>
+                            <x-author-link :post="$post"></x-author-link>
                         </h5>
                     </div>
                 </div>

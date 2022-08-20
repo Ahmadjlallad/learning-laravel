@@ -8,19 +8,7 @@ use App\Models\Category;@endphp
     <div class="space-y-2 lg:space-y-0 lg:space-x-4 mt-4">
         <!--  Category -->
         <div class="relative lg:inline-flex bg-gray-100 rounded-xl">
-            <x-dropdown.index>
-                <x-slot name="trigger">
-                    <button class="py-2 pl-3 text-sm font-semibold w-full lg:w-32 text-left flex lg:inline-flex">
-                        {{$currentCategory->slug ?? 'Category'}}
-                        <x-down-arrow></x-down-arrow>
-                    </button>
-                </x-slot>
-                <x-dropdown.item href="{{URL::to('/')}}" :active="request()->routeIs('home')">All</x-dropdown.item>
-                @foreach($categories as $category)
-                    <x-dropdown.item :active="request()->is('category/'.$category->slug)"
-                                     href="{{URL::to('category', ['category' => $category->slug])}}">{{ucwords($category->slug)}}</x-dropdown.item>
-                @endforeach
-            </x-dropdown.index>
+            <x-category-dropdown></x-category-dropdown>
         </div>
         <!-- Other Filters -->
         <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl">
@@ -46,8 +34,12 @@ use App\Models\Category;@endphp
 
         <!-- Search -->
         <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
-            <form method="GET" action="#" class="m-0">
+            <form method="GET" action="/" class="m-0">
+                @if(request('category'))
+                    <input type="text" hidden name="category" value="{{request('category')}}">
+                @endif
                 <input type="text" name="search" placeholder="Find something"
+                       value="{{request('search')}}"
                        class="bg-transparent placeholder-black font-semibold text-sm">
             </form>
         </div>
