@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,8 +21,8 @@ class PostFactory extends Factory
             'user_id' => User::factory(),
             'category_id' => 1,
             'title' => $this->faker->sentence,
-            'excerpt' => $this->faker->sentence,
-            'body' => $this->faker->paragraph,
+            'excerpt' => collect($this->faker->paragraphs(2))->map(fn ($item) => "<p>$item</p>")->implode(''),
+            'body' => collect($this->faker->paragraph)->map(fn ($item) => "<p>$item</p>")->implode(''),
             'slug' => $this->faker->slug
         ];
     }
