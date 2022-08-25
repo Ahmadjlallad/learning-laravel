@@ -1,9 +1,9 @@
 @php
-    /* @var $post \App\Models\Post */
-@endphp
+    /* @var $post Post */
+use App\Models\Post;@endphp
 
 <article
-    class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
+        class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
     <div class="py-6 px-5 lg:flex">
         <div class="flex-1 lg:mr-8">
             {{--      Todo      --}}
@@ -38,7 +38,7 @@
                     <img src="{{asset('images/lary-avatar.svg')}}" alt="Lary avatar">
                     <div class="ml-3">
                         <h5 class="font-bold">
-                            <a href="{{ URL::to('/authors', ['author' => $post->author->username])}}">{{ $post->author->name }}</a>
+                            <x-author-link :post="$post"></x-author-link>
                         </h5>
                     </div>
                 </div>
