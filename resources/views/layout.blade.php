@@ -10,13 +10,25 @@
 <section class="px-6 py-8">
     <nav class="md:flex md:justify-between md:items-center">
         <div>
-            <a href="/">
+            <a href={{URL::to("/")}}>
                 <img src="{{asset('images/logo.svg')}}" alt="Laracasts Logo" width="165" height="16">
             </a>
         </div>
 
-        <div class="mt-8 md:mt-0">
-            <a href="/" class="text-xs font-bold uppercase">Home Page</a>
+
+        <div class="mt-8 md:mt-0 flex items-center gap-x-5">
+            @guest()
+                <a href="{{URL::to("/register")}}" class="text-xs font-bold uppercase">Register</a>
+                <a href="{{URL::to("/login")}}" class="text-xs font-bold uppercase">Login</a>
+            @else
+                <h2 class="text-xs font-bold uppercase">Welcome {{ auth()->user()->name }}</h2>
+                <form class="m-0" action="/logout" method="post">
+                    @csrf
+                    <button type="submit" class="text-blue-500 hover:text-white hover:bg-blue-500 text-white font-medium py-2 px-2 mx-1 rounded">
+                        Logout
+                    </button>
+                </form>
+            @endguest
 
             <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                 Subscribe for Updates
@@ -36,11 +48,11 @@
 
                 <form method="POST" action="#" class="lg:flex text-sm">
                     <div class="lg:py-3 lg:px-5 flex items-center">
-                        <label for="email" class="hidden lg:inline-block">
+                        <label for="footer-email" class="hidden lg:inline-block">
                             <img src="{{asset('images/mailbox-icon.svg')}}" alt="mailbox letter">
                         </label>
 
-                        <input id="email" type="text" placeholder="Your email address"
+                        <input id="footer-email" type="text" placeholder="Your email address"
                                class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
                     </div>
 
@@ -54,4 +66,7 @@
         </div>
     </footer>
 </section>
+@if(session()->has('success'))
+    <x-flash></x-flash>
+@endif
 </body>
