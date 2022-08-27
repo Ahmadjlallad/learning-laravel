@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -23,8 +24,10 @@ use Illuminate\Support\Carbon;
  * @property string|null $published_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\User|null $author
- * @property-read \App\Models\Category|null $category
+ * @property-read \App\Models\User $author
+ * @property-read \App\Models\Category $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
+ * @property-read int|null $comments_count
  * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static Builder|Post filter(array $filters)
  * @method static Builder|Post newModelQuery()
@@ -69,8 +72,8 @@ class Post extends Model
     {
         $query->when(
             $filters['search'] ?? false,
-                fn($query, $search) => $query->where(fn($query) => $query->where('title', 'like', '%' . $filters['search'] . '%')
-                    ->orWhere('body', 'like', '%' . $filters['search'] . '%'))
+            fn($query, $search) => $query->where(fn($query) => $query->where('title', 'like', '%' . $filters['search'] . '%')
+                ->orWhere('body', 'like', '%' . $filters['search'] . '%'))
         );
 //        $query
 //            ->when($filters['category'] ?? false, fn($query, $category) => $query
@@ -88,5 +91,10 @@ class Post extends Model
             );
 
         return $query;
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

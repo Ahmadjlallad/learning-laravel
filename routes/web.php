@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
@@ -54,17 +55,15 @@ Route::get('/json', static function () {
 // using slug
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 Route::get('/category/{category:slug}', static function (Category $category) {
-    return view('posts', ['posts' => $category->post->load(['category', 'author']),
-        'categories' => Category::all(),
-        'currentCategory' => $category
-    ]);
+    return view('posts', ['posts' => $category->post->load(['category', 'author']), 'categories' => Category::all(), 'currentCategory' => $category]);
 })->name('category');
 Route::get('/authors/{author:username}', static function (User $author) {
-    return view('posts.index', ['posts' => $author->post->load(['category', 'author']), 'categories' => Category::all()
-    ]);
+    return view('posts.index', ['posts' => $author->post->load(['category', 'author']), 'categories' => Category::all()]);
 });
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
 Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
 Route::get('/login', [SessionsController::class, 'create'])->middleware('guest');
 Route::post('/sessions', [SessionsController::class, 'login'])->middleware('guest');
+Route::post('/{post}/comments', [CommentController::class, 'store']);
+Route::resource('/comments', CommentController::class, ['only' => ['destroy', 'update']])->middleware('hasComment');

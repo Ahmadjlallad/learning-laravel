@@ -1,5 +1,6 @@
+@php use App\Models\Post; @endphp
 @php
-    /* @var \App\Models\Post $post*/
+    /* @var Post $post*/
 @endphp
 @extends('layout')
 @section('content')
@@ -47,11 +48,17 @@
                     </div>
 
                     <h1 class="font-bold text-3xl lg:text-4xl mb-10">
-                            {{$post->title}}
+                        {{$post->title}}
                     </h1>
 
                     <div class="space-y-4 lg:text-lg leading-loose space-y-4">{!! $post->body !!}</div>
                 </div>
+                <section class="col-start-3 col-span-8 mt-10 space-y-6">
+                    <x-comments.form :post="$post"></x-comments.form>
+                    @foreach($post->comments as $comment)
+                        <x-comments.comment :comment="$comment"></x-comments.comment>
+                    @endforeach
+                </section>
             </article>
         </main>
     </section>
