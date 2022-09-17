@@ -15,13 +15,13 @@ class PostController extends Controller
     final public function index(): Factory|View|Application
     {
         return view('posts.index', [
-            'posts' => Post::latest()->filter(request(['category', 'search', 'author'] ))->with(['category', 'author'])->paginate(),
+            'posts' => Post::latest('id')->filter(request(['category', 'search', 'author'] ))->with(['category', 'author'])->paginate(),
         ]);
     }
 
     final public function show(Post $post): Factory|View|Application
     {
-        return view('posts.show', ['post' => $post, 'categories' => Category::all()]);
+        return view('posts.show', ['post' => $post->load('comments'), 'categories' => Category::all()]);
     }
 
     final protected function getPost(): array|Collection|\Illuminate\Support\Collection
