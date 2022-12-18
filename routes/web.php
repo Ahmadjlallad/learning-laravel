@@ -63,7 +63,8 @@ Route::get('/authors/{author:username}', static function (User $author) {
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
 Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
-Route::get('/login', [SessionsController::class, 'create'])->middleware('guest');
+Route::get('/login', [SessionsController::class, 'create'])->middleware('guest')->name('login');
 Route::post('/sessions', [SessionsController::class, 'login'])->middleware('guest');
 Route::post('/{post}/comments', [CommentController::class, 'store']);
 Route::resource('/comments', CommentController::class, ['only' => ['destroy', 'update']])->middleware('hasComment');
+Route::get('admin', [PostController::class, 'create'])->middleware('auth', 'admin');

@@ -33,4 +33,8 @@ class PostController extends Controller
         }
         return $post->with(['category', 'author'])->get();
     }
+    public function create()
+    {
+        return view('posts.create');
+    }
 }
